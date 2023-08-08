@@ -1,0 +1,40 @@
+﻿
+@using ToDoApp.Models.Entities
+@model IEnumerable<ToDo>
+@{
+    ViewData["Title"] = "Home Page";
+    var totalToDos= @Model.Count();
+    var totalIncompleteToDos = @Model.Where(p=>p.IsCompleted==false).Count();
+    var totalCompletedTodos = totalToDos-totalIncompleteToDos;
+}
+
+
+
+<p class='link link-success'>Total Todos #@totalToDos</p>
+<p>Total Incomplete ToDos #@totalIncompleteToDos</p>
+<p>Total Completed ToDos #@totalCompletedTodos</p>
+
+<a class="btn btn-primary">Add ToDo</a>
+
+<table class = 'table table-responsive table-stripped'>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Detail</th>
+            <th>Is Completed</th>
+            <th>Completion Date</th>
+        </tr>
+    </thead>
+    <tbody>        
+            @foreach(var item in Model){
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Detail</td>
+                    <td>@item.IsCompleted</td>
+                    <td>@item.CompletionDate</td>
+                    <td><a href='' class='btn btn-xs btn-success'></a></td>
+                </tr>
+            }
+        
+    </tbody>
+</table>
