@@ -1,39 +1,100 @@
-﻿
-@using ToDoApp.Models.Entities
+﻿@using ToDoApp.Models.Entities
 @model IEnumerable<ToDo>
 @{
     ViewData["Title"] = "Home Page";
-    var totalToDos= @Model.Count();
-    var totalIncompleteToDos = @Model.Where(p=>p.IsCompleted==false).Count();
-    var totalCompletedTodos = totalToDos-totalIncompleteToDos;
+    var totalToDos = @Model.Count();
+    var totalIncompleteToDos = @Model.Where(p => p.IsCompleted == false).Count();
+    var totalCompletedTodos = totalToDos - totalIncompleteToDos;
 }
-
-
 
 <p class='link link-info'>Total Todos #@totalToDos</p>
 <p class='link link-warning'>Total Incomplete ToDos #@totalIncompleteToDos</p>
 <p class='link link-success'>Total Completed ToDos #@totalCompletedTodos</p>
 
-<a class="btn btn-primary">Add ToDo</a>
+<a class="btn btn-primary" href="#" id="addFormButton">Add ToDo</a>
 
-<table class = 'table table-responsive table-striped table-sm'>
+<!-- Inline form for adding ToDo -->
+<div id="formContainer" class='container-fluid'>
+</div>
+
+<table class='table table-responsive table-striped table-sm'>
     <thead>
         <tr>
             <th>Id</th>
             <th>Description</th>
             <th>Is Completed ?</th>
             <th>Completion Date</th>
+            <th>Actions</th>
         </tr>
     </thead>
-    <tbody>        
-            @foreach(var item in Model){
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Detail</td>
-                    <td>@(item.IsCompleted ? "Yes" : "No")</td>
-                    <td>@(item.CompletionDate.HasValue == true? item.CompletionDate.Value.ToShortDateString(): string.Empty)</td>
-                </tr>
-            }
-        
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Detail</td>
+                <td>@(item.IsCompleted ? "Yes" : "No")</td>
+                <td>@(item.CompletionDate?.ToShortDateString() ?? string.Empty)</td>
+                <td>
+                    @if (!item.IsCompleted)
+                    {
+                        <form asp-controller="Home" asp-action="MarkAsCompleted" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="checkbox" name="complete" />
+                            <button type="submit" class="btn btn-primary">Mark as Completed</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#addFormButton").click(function () {
+            var formContainer = $("#formContainer");
+            var newForm = $("<form id='myFormName' class='form-inline'></form>");
+
+            // Add form elements with Bootstrap classes for inline layout
+            var inputDetailField = $("<input class='form-control col-md-6 mr-2' type='text' name='Detail' placeholder='Please Enter ToDo Description' required />");
+            newForm.append(inputDetailField);
+
+            var inputIsCompletedField = $("<div class='form-check form-check-inline'><input class='form-check-input' type='checkbox' name='IsCompleted' /><label class='form-check-label ml-2'>Completed</label></div>");
+            newForm.append(inputIsCompletedField);
+
+            var submitButton = $("<button class='btn btn-success ml-2' type='submit'>Submit</button>");
+            newForm.append(submitButton);
+
+            // Add form submission event handler
+            newForm.submit(function (event) {
+                event.preventDefault();
+
+                // Collect form data
+                var formData = newForm.serialize();
+
+                // Send form data to the server using AJAX
+                $.ajax({
+                    url: "/Home/AddToDo",
+                    type: "POST",
+                    data: formData,
+                    success: function (data) {
+                        // Handle success response
+                        alert("Successfully added");
+                        console.log(data);
+                        // Reload the page to update the list
+                        location.reload();
+                    },
+                    error: function (error) {
+                        // Handle error
+                        alert("Error encountered");
+                    }
+                });
+            });
+
+            formContainer.append(newForm);
+        });
+    });
+</script>
