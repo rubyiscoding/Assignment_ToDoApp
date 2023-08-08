@@ -12,6 +12,12 @@ namespace ToDoApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ToDoContext _db;
 
+        /// <summary>
+        /// HomeController default constructor taking logger and ToDoContext
+        /// Dependency Injection best practices
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="toDoContext">our database context for ToDo</param>
         public HomeController(ILogger<HomeController> logger, ToDoContext toDoContext)
         {
             _logger = logger;
@@ -22,12 +28,13 @@ namespace ToDoApp.Controllers
         {
             return View(GetToDos());
         }
-
-        private List<ToDo> GetToDos(){
-            var abc = _db.ToDos.ToList();
-            return _db.ToDos.ToList();
-        }
-
+        
+        /// <summary>
+        /// The method GetToDos will return the list of To Do items from database.
+        /// </summary>
+        /// <returns>List of To Do items</returns>
+        private List<ToDo> GetToDos() => _db.ToDos.ToList();
+        
         public IActionResult Privacy()
         {
             return View();

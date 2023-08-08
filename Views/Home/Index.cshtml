@@ -10,18 +10,18 @@
 
 
 
-<p class='link link-success'>Total Todos #@totalToDos</p>
-<p>Total Incomplete ToDos #@totalIncompleteToDos</p>
-<p>Total Completed ToDos #@totalCompletedTodos</p>
+<p class='link link-info'>Total Todos #@totalToDos</p>
+<p class='link link-warning'>Total Incomplete ToDos #@totalIncompleteToDos</p>
+<p class='link link-success'>Total Completed ToDos #@totalCompletedTodos</p>
 
 <a class="btn btn-primary">Add ToDo</a>
 
-<table class = 'table table-responsive table-stripped'>
+<table class = 'table table-responsive table-striped table-sm'>
     <thead>
         <tr>
             <th>Id</th>
-            <th>Detail</th>
-            <th>Is Completed</th>
+            <th>Description</th>
+            <th>Is Completed ?</th>
             <th>Completion Date</th>
         </tr>
     </thead>
@@ -30,9 +30,8 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Detail</td>
-                    <td>@item.IsCompleted</td>
-                    <td>@item.CompletionDate.ToShortDateString()</td>
-                    <td><a href='#' class='btn btn-xs btn-success'>Edit</a></td>
+                    <td>@(item.IsCompleted ? "Yes" : "No")</td>
+                    <td>@(item.CompletionDate.HasValue == true? item.CompletionDate.Value.ToShortDateString(): string.Empty)</td>
                 </tr>
             }
         
