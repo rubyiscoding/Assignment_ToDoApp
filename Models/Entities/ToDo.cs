@@ -10,6 +10,7 @@ namespace ToDoApp.Models.Entities
     {
         // [Key] add Pk in her using key attribute or use it in model creation method in dbcontext
         public int Id { get; set; }
+        [Required]
         public string Detail { get; set; } = string.Empty;
 
         /// <summary>
