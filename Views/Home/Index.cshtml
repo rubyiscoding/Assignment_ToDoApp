@@ -31,8 +31,8 @@
                     <td>@item.Id</td>
                     <td>@item.Detail</td>
                     <td>@item.IsCompleted</td>
-                    <td>@item.CompletionDate</td>
-                    <td><a href='' class='btn btn-xs btn-success'></a></td>
+                    <td>@item.CompletionDate.ToShortDateString()</td>
+                    <td><a href='#' class='btn btn-xs btn-success'>Edit</a></td>
                 </tr>
             }
         
