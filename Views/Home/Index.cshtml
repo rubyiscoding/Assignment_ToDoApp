@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home Page";
     var totalToDos = @Model.Count();
     var totalIncompleteToDos = @Model.Count(p => !p.IsCompleted);
-    var totalCompletedTodos = totalToDos - totalIncompleteToDos;
+    var totalCompletedTodos = ViewBag.CompletedTodos; 
 }
 
 <div class="container mt-5">
@@ -87,18 +87,18 @@
         // When "Create ToDo" button is clicked
         $("#addFormButton").click(function () {
             var formContainer = $("#formContainer");
-            var newForm = $("<form id='myFormName' class='form-inline'></form>");
+            var newForm = $("<form id='myFormName' class=''></form>");
 
             // Add input field for ToDo description 
-            var inputDetailField = $("<input class='form-control col-md-6 mr-2 mb-2' type='text' name='Detail' placeholder='Please enter a To Do item' required />");
+            var inputDetailField = $("<div class= 'form-group col-md-6' style = 'display: inline-block'><input class='form-control' type='text' name='Detail' placeholder='Please enter a To Do item' required /></div>");
             newForm.append(inputDetailField);
 
             // Add checkbox and label for completion status 
-            var inputIsCompletedField = $("<div class='form-check form-check-inline'><input class='form-check-input' type='checkbox' name='IsCompleted' /><label class='form-check-label ml-2'>Completed</label></div>");
+            var inputIsCompletedField = $("<div class=' form-group form-check col-md-4' style = 'display: inline-block;margin-left: 20px;'><input class='form-check-input' type='checkbox' name='IsCompleted' /><label class='form-check-label ml-2' style= 'margin-left: 20px';>Mark as completed</label></div>");
             newForm.append(inputIsCompletedField);
     
             // Add submit button 
-            var submitButton = $("<button class='btn btn-success ml-2' type='submit'>Add</button>");
+            var submitButton = $(" <div class= 'form-group' style = 'display: inline-block'> <button class='btn btn-success ml-2' type='submit'>Add</button></div>");
             newForm.append(submitButton);
 
             // Add form submission event handler
