@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Home Page";
     var totalToDos = @Model.Count();
-    var totalIncompleteToDos = @Model.Where(p => p.IsCompleted == false).Count();
+    var totalIncompleteToDos = @Model.Count(p => !p.IsCompleted);
     var totalCompletedTodos = totalToDos - totalIncompleteToDos;
 }
 
@@ -21,7 +21,8 @@
         </div>
         <div class="col-md-4">
             <div class="alert alert-success" role="alert">
-                Total Completed ToDos: <span class="font-weight-bold">@totalCompletedTodos</span>
+                Total Completed ToDos:
+                <a href='@Url.Action("CompletedTodos", "Home")'>#@totalCompletedTodos</a>
             </div>
         </div>
     </div>

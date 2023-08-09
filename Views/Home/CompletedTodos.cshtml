@@ -1,0 +1,28 @@
+@using ToDoApp.Models.Entities
+
+@model IEnumerable<ToDo>
+@{
+    ViewData["Title"] = "Completed To-Dos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class='table table-responsive table-striped table-sm'>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Completion Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Detail</td>
+                <td>@(item.CompletionDate?.ToShortDateString() ?? string.Empty)</td>
+            </tr>
+        }
+    </tbody>
+</table>

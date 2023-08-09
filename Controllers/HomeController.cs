@@ -107,5 +107,12 @@ namespace ToDoApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult CompletedTodos()
+{
+        var completedToDos = GetToDos().Where(p => p.IsCompleted);
+        return View(completedToDos);
+}
     }
+
 }
