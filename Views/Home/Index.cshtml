@@ -7,16 +7,19 @@
     var totalCompletedTodos = totalToDos - totalIncompleteToDos;
 }
 
+<!-- Display total counts -->
 <p class='link link-info'>Total Todos #@totalToDos</p>
 <p class='link link-warning'>Total Incomplete ToDos #@totalIncompleteToDos</p>
 <p class='link link-success'>Total Completed ToDos #@totalCompletedTodos</p>
 
-<a class="btn btn-primary" href="#" id="addFormButton">Create ToDo</a>
+<!-- Add new To-Do button with primary styling -->
+<a class="btn btn-primary mb-3" href="#" id="addFormButton">Create ToDo</a>
 
-<!-- Inline form for adding ToDo -->
+<!-- Inline form container for adding new To-Do -->
 <div id="formContainer" class='container-fluid'>
 </div>
 
+<!-- Table to display To-Do items with responsive and striped styling -->
 <table class='table table-responsive table-striped table-sm'>
     <thead>
         <tr>
@@ -36,6 +39,7 @@
                 <td>@(item.IsCompleted ? "Yes" : "No")</td>
                 <td>@(item.CompletionDate?.ToShortDateString() ?? string.Empty)</td>
                 <td>
+                    <!-- Display form to mark To-Do as completed if not already -->
                     @if (!item.IsCompleted)
                     {
                         <form asp-controller="Home" asp-action="MarkAsCompleted" method="post" class="form-inline">
@@ -50,21 +54,25 @@
     </tbody>
 </table>
 
+<!-- Include jQuery library for script -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
     $(document).ready(function () {
+        // When "Create ToDo" button is clicked
         $("#addFormButton").click(function () {
             var formContainer = $("#formContainer");
             var newForm = $("<form id='myFormName' class='form-inline'></form>");
 
-            // Add form elements with Bootstrap classes for inline layout
-            var inputDetailField = $("<input class='form-control col-md-6 mr-2' type='text' name='Detail' placeholder='Description' required />");
+            // Add input field for ToDo description 
+            var inputDetailField = $("<input class='form-control col-md-6 mr-2 mb-2' type='text' name='Detail' placeholder='Description' required />");
             newForm.append(inputDetailField);
 
+            // Add checkbox and label for completion status 
             var inputIsCompletedField = $("<div class='form-check form-check-inline'><input class='form-check-input' type='checkbox' name='IsCompleted' /><label class='form-check-label ml-2'>Completed</label></div>");
             newForm.append(inputIsCompletedField);
-
+    
+            // Add submit button 
             var submitButton = $("<button class='btn btn-success ml-2' type='submit'>Add</button>");
             newForm.append(submitButton);
 
@@ -94,6 +102,7 @@
                 });
             });
 
+            // Append the form to the container
             formContainer.append(newForm);
         });
     });
