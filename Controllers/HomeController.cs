@@ -4,8 +4,8 @@ using ToDoApp.Data;
 using ToDoApp.Models;
 using ToDoApp.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging; // Add this for ILogger
-using System.Collections.Generic;  // Add this for List<T>
+using Microsoft.Extensions.Logging; 
+using System.Collections.Generic;  
 
 namespace ToDoApp.Controllers
 {

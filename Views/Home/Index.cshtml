@@ -11,7 +11,7 @@
 <p class='link link-warning'>Total Incomplete ToDos #@totalIncompleteToDos</p>
 <p class='link link-success'>Total Completed ToDos #@totalCompletedTodos</p>
 
-<a class="btn btn-primary" href="#" id="addFormButton">Add ToDo</a>
+<a class="btn btn-primary" href="#" id="addFormButton">Create ToDo</a>
 
 <!-- Inline form for adding ToDo -->
 <div id="formContainer" class='container-fluid'>
@@ -38,10 +38,10 @@
                 <td>
                     @if (!item.IsCompleted)
                     {
-                        <form asp-controller="Home" asp-action="MarkAsCompleted" method="post">
+                        <form asp-controller="Home" asp-action="MarkAsCompleted" method="post" class="form-inline">
                             <input type="hidden" name="id" value="@item.Id" />
-                            <input type="checkbox" name="complete" />
-                            <button type="submit" class="btn btn-primary">Mark as Completed</button>
+                            <input type="checkbox" name="complete" class="form-check-input" />
+                            <button type="submit" class="btn btn-success">Mark as Completed</button>
                         </form>
                     }
                 </td>
@@ -59,13 +59,13 @@
             var newForm = $("<form id='myFormName' class='form-inline'></form>");
 
             // Add form elements with Bootstrap classes for inline layout
-            var inputDetailField = $("<input class='form-control col-md-6 mr-2' type='text' name='Detail' placeholder='Please Enter ToDo Description' required />");
+            var inputDetailField = $("<input class='form-control col-md-6 mr-2' type='text' name='Detail' placeholder='Description' required />");
             newForm.append(inputDetailField);
 
             var inputIsCompletedField = $("<div class='form-check form-check-inline'><input class='form-check-input' type='checkbox' name='IsCompleted' /><label class='form-check-label ml-2'>Completed</label></div>");
             newForm.append(inputIsCompletedField);
 
-            var submitButton = $("<button class='btn btn-success ml-2' type='submit'>Submit</button>");
+            var submitButton = $("<button class='btn btn-success ml-2' type='submit'>Add</button>");
             newForm.append(submitButton);
 
             // Add form submission event handler
